@@ -108,5 +108,55 @@ class Generator(nn.Module):
             self.conv_to_regular_image
         ])(x)
 
+class Discriminator(nn.Module):
+    def __init__(self):
+        super(Discriminator, self).__init__()
+        self.conv_1 = nn.Conv2d(in_channels=3,
+                                out_channels=32,
+                                kernel_size=3,
+                                stride=1,
+                                padding=1)
+        self.conv_2 = nn.Conv2d(in_channels=32,
+                                out_channels=64,
+                                kernel_size=3,
+                                stride=2,
+                                padding=1)
+        self.conv_3 = nn.Conv2d(in_channels=64,
+                                out_channels=128,
+                                kernel_size=3,
+                                stride=1,
+                                padding=1)
+        self.conv_4 = nn.Conv2d(in_channels=128,
+                                out_channels=128,
+                                kernel_size=3,
+                                stride=2,
+                                padding=1)
+        self.conv_5 = nn.Conv2d(in_channels=128,
+                                out_channels=256,
+                                kernel_size=3,
+                                stride=1,
+                                padding=1)
+        self.conv_6 = nn.Conv2d(in_channels=256,
+                                out_channels=256,
+                                kernel_size=3,
+                                stride=1,
+                                padding=1)
+        self.conv_7 = nn.Conv2d(in_channels=256,
+                                out_channels=1,
+                                kernel_size=3,
+                                stride=1,
+                                padding=1)
+
+    def forward(self, x):
+        lrelu = TNF.leaky_relu
+        return nn.Sequential(*[
+            self.conv_1, lrelu,
+            self.conv_2, lrelu,
+            self.conv_3, nn.BatchNorm2d(128), lrelu,
+            self.conv_4, lrelu,
+            self.conv_5, nn.BatchNorm2d(256), lrelu,
+            self.conv_6, nn.BatchNorm2d(256), lrelu,
+            self.conv_7])(x)
+
 if __name__ == '__main__':
     print("import this instead")

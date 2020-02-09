@@ -4,6 +4,8 @@ import networks
 def main(args):
     generator = networks.Generator()
     print(generator)
+    discriminator = networks.Discriminator()
+    print(discriminator)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Do something interesting")
